@@ -43,7 +43,7 @@ def file_to_array(file_path)
     end 
     return array_of_hash
 end 
-
+#----------searching for contacts that have their birthday today
 def get_birthday_of_today(array_of_contacts)
      #  Getting the current  day and month
         today = Time.now
@@ -60,14 +60,10 @@ def get_birthday_of_today(array_of_contacts)
     return found_birthdays
 end
 #----------Method that takes the interval of dates to look in and returns a list of name or no one found-----------#
-def get_birthday_in_interval(array_of_contacts,start_date,end_date)
+def get_birthday_in_interval(array_of_contacts,from_month,to_month)
     found_birthdays=[]
-     d_start= Date.parse(start_date)
-     d_end = Date.parse(end_date)
      array_of_contacts.each do |contact|
-        contact_date = contact["day"].to_s + "-"+ contact["month"].to_s+ "-" + "0000"
-        contact_date =Date.parse(contact_date)
-        if contact_date >= d_start && contact_date <= d_end
+        if contact["month"] >= from_month && contact["month"] <= to_month
             found_birthdays << contact
             # puts " #{contact["name"]}'s Birthday is IN"
         end
@@ -77,3 +73,4 @@ def get_birthday_in_interval(array_of_contacts,start_date,end_date)
     return found_birthdays
 
 end
+#-----------

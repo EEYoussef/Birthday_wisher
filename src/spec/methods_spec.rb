@@ -23,11 +23,9 @@ describe "get_birthday_in_interval" do
     it "should accept an argument" do
         expect (get_birthday_in_interval()). to raise_error
     end
-    it "should accept three argument array and start and end date" do
-        expect (get_birthday_in_interval(contact_test,)). to raise_error
-    end
-    it "should return names of contacts who's birthday is tody" do 
-        expect(get_birthday_in_interval(contact_test,'1-1','30-12')).to be_a Contact 
+    
+    it "should return names of contacts who's birthday that lies in the range of months given" do 
+        expect(get_birthday_in_interval(contact_test,1,12)).to be_a Contact 
     end 
 
 end

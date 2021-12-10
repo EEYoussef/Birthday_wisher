@@ -14,3 +14,16 @@ def table_display(array_of_contacts)
     puts table.render(:ascii).red
       
 end
+
+def letter_display (letter_name)
+    begin
+        File.foreach(letter_name) do |line|
+            puts "#{line}"
+        end
+      
+    rescue
+        puts "Invalid path! please check file name"
+        
+    end 
+
+end
