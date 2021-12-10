@@ -1,4 +1,32 @@
 require "json"
+require 'date'
+# require 'active_support/all' #handle the time interval
+#-------------to clear the terminal
+def self_clear
+    print "\e[2J\e[f"
+end 
+#---------------------------
+
+def app_heading
+    self_clear
+    arter = Artii::Base.new
+    puts arter.asciify("Birthday Wisher").blue
+    pastel = Pastel.new
+    font = TTY::Font.new(:starwars)
+    puts pastel.blue(font.write("Welcome", letter_spacing: 1))
+    # box = TTY::Box.frame(width: 165, height: 5, align: :center) do
+    #      "Welcome to Birthday Wisher".blue
+    #     end
+    # puts box
+    
+end 
+#------------end of app heading--------
+def end_app_heading
+    self_clear
+    arter = Artii::Base.new
+    puts arter.asciify("SEE  YOU  NEXT  TIME !").blue
+end 
+#-----------Reading from file and extracting data into an array-----------
 def file_to_array(file_path)
     begin
         json_from_file = File.read(file_path)
@@ -21,11 +49,31 @@ def get_birthday_of_today(array_of_contacts)
         today = Time.now
         today_month = today.month
         today_day = today.day
+        found_birthdays = []        
 
         array_of_contacts.each do |contact|
         if contact["month"] == today_month && contact["day"] == today_day
+            found_birthdays << contact
             puts "Today is #{contact["name"]}'s Birthday"
+        end
+    end
+    return found_birthdays
+end
+#----------Method that takes the interval of dates to look in and returns a list of name or no one found-----------#
+def get_birthday_in_interval(array_of_contacts,start_date,end_date)
+    found_birthdays=[]
+     d_start= Date.parse(start_date)
+     d_end = Date.parse(end_date)
+     array_of_contacts.each do |contact|
+        contact_date = contact["day"].to_s + "-"+ contact["month"].to_s+ "-" + "0000"
+        contact_date =Date.parse(contact_date)
+        if contact_date >= d_start && contact_date <= d_end
+            found_birthdays << contact
+            # puts " #{contact["name"]}'s Birthday is IN"
         end
     
     end
+     
+    return found_birthdays
+
 end
