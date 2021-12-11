@@ -66,8 +66,8 @@ app_heading
 
 
 # ------------Reading from file birthday all the contacts 
-
-hash_of_contacts = file_to_array ("./birthday.json")
+BITHDAY_FILE_PATH = "./birthday.json"
+hash_of_contacts = file_to_array (BITHDAY_FILE_PATH)
 array_of_contacts = hash_of_contacts["contacts"]
 
 
@@ -107,7 +107,8 @@ while true
             table_display (found_birthday_array) 
           end
       when 2
-        answer = prompt.select("Any birthday between:",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12) 
+        puts "Any birthday between:"
+        answer = select_month
         from_month = answer
         answer = prompt.select("And:",LIST_OF_MONTHS.select{|key,value| value >= from_month},symbols: { marker: ">" },per_page:12) 
         to_month = answer
@@ -118,6 +119,14 @@ while true
           table_display (found_birthday_array) 
         end
       when 3
+          puts "To add a new contact you need to provide Name, email, and Date of Birth"
+          new_contact = enter_contact_data    
+          new_contact.display_contact
+          if prompt.yes?("Do You want to save?")
+            new_contact.add_contact_to_file(BITHDAY_FILE_PATH)
+          else
+
+          end
       when 4
       when 5
       when 6

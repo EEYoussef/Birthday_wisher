@@ -1,13 +1,1 @@
-{
-    "contacts":[{
-"name":"Test",
-"email":"test@hotmail.com",
-"month":12,
-"day":9
-},{
-    "name":"Test2",
-    "email":"test@hotmail.com",
-    "month":1,
-    "day":12
-    }]
- }
+{"contacts":[{"name":"Eman","email":"lkjlm@hl.com","month":1,"day":"9"},{"name":"Dgf","email":"sfd@gd.vd","month":3,"day":"4"},{"name":"Lkjln","email":"lkn@lkj.co","month":1,"day":"5"},{"name":"Kjlkkln","email":"lkjk@lkj.co","month":4,"day":"10"},{"name":"Lkjln","email":"lkj@klkn.com","month":11,"day":"7"}]}

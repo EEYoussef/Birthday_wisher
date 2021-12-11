@@ -2,6 +2,7 @@
 require "tty-prompt"
 require "tty-table"
 require "colorize"
+require_relative "./classes/contact.rb"
 
 def table_display(array_of_contacts)
    
@@ -26,4 +27,38 @@ def letter_display (letter_name)
         
     end 
 
+end
+#----------------Method to ask the user to select a month
+def select_month 
+    prompt = TTY::Prompt.new
+     prompt.select("Select a month",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12)
+    
+  end
+#----------Method to collect data from user for the contact
+def enter_contact_data
+    prompt = TTY::Prompt.new
+    name= prompt.ask("Enter Name:")do |q| #to capitalize every word in the name
+    q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
+    q.modify :strip, :collapse
+    q.required true
+    q.validate(/^[a-zA-Z\s]*$/,"Invalid name please try again")
+    end
+    email = prompt.ask("Enter Email:") { |q| q.validate :email,"Invalid email please try again" }
+    puts ("Enter Date of Birth ")
+    month = select_month
+    
+#   new_contact [:name] =name
+#   new_contact [:email] =email
+#   new_contact [:month ]=  month
+    case month
+    when 4,6,9,11
+            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-30") }
+    when 1,3,5,7,8,10,12
+            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-31") }
+    when 2
+            day = prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-29") }
+    end
+# new_contact[:day] = answer_day
+    new_contact = Contact.new(name,email,month,day)
+    return new_contact
 end
