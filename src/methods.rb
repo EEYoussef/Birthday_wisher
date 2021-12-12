@@ -33,7 +33,7 @@ def file_to_array(file_path)
         array_of_hash = JSON.parse(json_from_file)   
         
     rescue
-        puts "Invalid path! Creating file for you"
+        puts "Invalid path! Creating file for you "
         pp file_path
         default_json_contact = {"contacts":[]}
         File.open(file_path, "w") do |file| 
@@ -74,3 +74,73 @@ def get_birthday_in_interval(array_of_contacts,from_month,to_month)
 
 end
 #-----------
+
+#-----get contact by name
+def get_contact_by_name(name)
+    array_of_contacts = file_to_array(BIRTHDAY_FILE_PATH)
+    found_array = []
+    i=0
+    array_of_contacts.each do |key ,contact_list|
+        contact_list.each do |contact|
+            if contact["name"]==name
+                found_array << contact
+            end 
+
+        end
+       
+        # if contact[:name] ==name
+        #     puts contact["email"]
+        # end
+    end
+    return found_array
+end
+
+def get_contact_index(contact_hash)
+    file_array = file_to_array (BIRTHDAY_FILE_PATH)
+    index = file_array["contacts"].index(contact_hash)
+   return index 
+end
+
+
+def delete_contact_from_file(index)
+    file_array = file_to_array (BIRTHDAY_FILE_PATH)
+    updated_array = file_array["contacts"].dup.tap{|i| i.delete_at(index)}
+    updated_array_in_hash = {"contacts"=> updated_array}
+    # File.open(BIRTHDAY_FILE_PATH,'w') { |f| f.puts updated_array.to_json }
+    File.write(BIRTHDAY_FILE_PATH ,updated_array_in_hash.to_json)   
+
+end
+
+
+def update_contact(contact_hash)
+    contact_index_in_file = get_contact_index(contact_hash)
+    prompt = TTY::Prompt.new
+    answer = prompt.select("Which field do you want to change?") do |menu|
+        menu.choice "Email", 1
+        menu.choice "Data of Birth", 2
+        menu.choice "Exit to main menu", 3
+      end
+      case answer
+      when 1 
+        email = prompt.ask("Enter Email:") { |q| q.validate :email,"Invalid email please try again" }
+        contact_hash["email"] = email
+      when 2
+        puts ("Enter Date of Birth ")
+        month = select_month
+        day = select_day(month)
+        contact_hash["day"] = day
+        contact_hash["month"]=month
+      when 3
+        return
+    end
+        updated_contact = Contact.new(contact_hash["name"],contact_hash["email"],contact_hash["month"],contact_hash["day"])
+        updated_contact.display_contact
+          if prompt.yes?("Do You want to save?")
+            delete_contact_from_file(contact_index_in_file)
+
+            updated_contact.add_contact_to_file(BIRTHDAY_FILE_PATH)
+          else
+
+          end
+    
+end

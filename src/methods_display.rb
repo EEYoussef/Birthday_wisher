@@ -6,10 +6,10 @@ require_relative "./classes/contact.rb"
 
 def table_display(array_of_contacts)
    
-    header = ["Name", "Birthday"]
+    header = ["Name", "Birthday","Email"]
     table = TTY::Table.new(header: header)
     array_of_contacts.each do |contact|
-        table<<[contact["name"],contact["day"].to_s + "-" + contact["month"].to_s]
+        table<<[contact["name"],contact["day"].to_s + "-" + contact["month"].to_s, contact["email"]]
     end
       
     puts table.render(:ascii).red
@@ -34,6 +34,20 @@ def select_month
      prompt.select("Select a month",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12)
     
   end
+
+def select_day(month)
+    prompt = TTY::Prompt.new
+    case month
+    when 4,6,9,11
+            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-30") }
+    when 1,3,5,7,8,10,12
+            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-31") }
+    when 2
+            day = prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-29") }
+    end  
+return day
+
+end
 #----------Method to collect data from user for the contact
 def enter_contact_data
     prompt = TTY::Prompt.new
@@ -46,19 +60,8 @@ def enter_contact_data
     email = prompt.ask("Enter Email:") { |q| q.validate :email,"Invalid email please try again" }
     puts ("Enter Date of Birth ")
     month = select_month
-    
-#   new_contact [:name] =name
-#   new_contact [:email] =email
-#   new_contact [:month ]=  month
-    case month
-    when 4,6,9,11
-            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-30") }
-    when 1,3,5,7,8,10,12
-            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-31") }
-    when 2
-            day = prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-29") }
-    end
-# new_contact[:day] = answer_day
+    day = select_day(month)
+
     new_contact = Contact.new(name,email,month,day)
     return new_contact
 end

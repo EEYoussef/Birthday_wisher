@@ -66,8 +66,8 @@ app_heading
 
 
 # ------------Reading from file birthday all the contacts 
-BITHDAY_FILE_PATH = "./birthday.json"
-hash_of_contacts = file_to_array (BITHDAY_FILE_PATH)
+BIRTHDAY_FILE_PATH = "./birthday.json"
+hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
 array_of_contacts = hash_of_contacts["contacts"]
 
 
@@ -99,14 +99,14 @@ while true
   prompt = TTY::Prompt.new
   answer = prompt.select("What would you like to do?",LIST_OF_MAIN_MENU,symbols: { marker: ">" },per_page:6)
   case answer
-      when 1
+      when 1 #to find a birthday matches today
           found_birthday_array = get_birthday_of_today(array_of_contacts)
           if found_birthday_array.empty? 
             puts no_data_style.("You dont seem to have any Birthdays today!!")
           else
             table_display (found_birthday_array) 
           end
-      when 2
+      when 2 # to find contact in an interval 
         puts "Any birthday between:"
         answer = select_month
         from_month = answer
@@ -118,17 +118,50 @@ while true
         else
           table_display (found_birthday_array) 
         end
-      when 3
+      when 3 # to add new contact
           puts "To add a new contact you need to provide Name, email, and Date of Birth"
           new_contact = enter_contact_data    
           new_contact.display_contact
           if prompt.yes?("Do You want to save?")
-            new_contact.add_contact_to_file(BITHDAY_FILE_PATH)
+            new_contact.add_contact_to_file(BIRTHDAY_FILE_PATH)
           else
 
           end
       when 4
-      when 5
+        
+      when 5 # to update a contact using the name
+        i=0
+        prompt_update = TTY::Prompt.new
+        name= prompt_update.ask("Enter Name:")do |q| #to capitalize every word in the name
+        q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
+        q.modify :strip, :collapse
+        q.required true
+        q.validate(/^[a-zA-Z\s]*$/,"Invalid name please try again")
+        end
+        found_contact = get_contact_by_name(name)
+        if found_contact.empty?
+          puts "No contacts matches this name"
+        else
+        if found_contact.length >=2 
+          
+          puts "You have #{found_contact.length} contacts"
+          prompt_choose = TTY::Prompt.new
+          change_answer = prompt_choose.select("Which one do you want to change") do |menu|
+              found_contact.each do |contact|
+              menu.choice name: "#{contact["name"]} Email: #{contact ["email"]} Data of Birth(dd-mm) %0.2d" % contact["day"]+ "- %0.2d" % contact["month"],  value: i
+              i+=1
+               
+              end
+            end
+          else
+            puts "Name: #{found_contact[0]["name"]}  Email: #{found_contact[0]["email"]}  Data of Birth (dd - mm): %0.2d" % found_contact[0]["day"] + "- %0.2d" % found_contact[0]["month"]
+            change_answer = 0
+          end
+          
+          update_contact (found_contact[change_answer])
+
+        end
+
       when 6
         end_app_heading
         puts "Thank You for using the app.".blue 
