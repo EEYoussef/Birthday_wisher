@@ -6,10 +6,11 @@ require "Artii"
 require "tty-box"
 require "tty-font"
 require "postmark"
-
+require "dotenv"
 require_relative './methods.rb'
 require_relative "./methods_display.rb"
 
+Dotenv.load("./.env")
 
 #----------ARGV Handling--------
 if ARGV.length > 0
@@ -70,11 +71,9 @@ app_heading
 
 # ------------Reading from file birthday all the contacts 
 BIRTHDAY_FILE_PATH = "./birthday.json"
-API_TOKEN = '694dcf63-c802-4e81-af54-8555046d3f3a' #PLEASE CHANGE WITH YOUR API_TOKEN FROM POSTMARK ACCOUNT
-SENDER_SIGNATURE = 'gcas022101@coderacademy.edu.au' #PLEASE CHANGE WITH YOUR SENDER SIGNATURE FROM POSTMARK 
 
-
-
+API_TOKEN = ENV['API_TOKEN_POSTMARK']
+SENDER_SIGNATURE = ENV['SENDER_SIGNATURE_POSTMORK']
 
 
 
