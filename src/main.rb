@@ -10,7 +10,7 @@ require "dotenv"
 require_relative './methods.rb'
 require_relative "./methods_display.rb"
 
-Dotenv.load("./.env")
+Dotenv.load("../.env")
 
 #----------ARGV Handling--------
 if ARGV.length > 0
