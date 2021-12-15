@@ -9,6 +9,7 @@ gem install bundle
 
 #install the gems
 bundle install
+gem install postmark
 
 #check for gem
 # if ! gem spec "tty-color" > /dev/null 2>&1; then
@@ -17,15 +18,17 @@ bundle install
 
 # check ruby version
 currentversion="$(ruby -v)"
-currentver=$(echo $currentver | cut -dp -f1 | sed 's/\.//g')
+currentver=$(echo $currentversion | cut -dp -f1 | sed 's/\.//g')
 requiredver="300"
- if  [ "$currentver" != "$requiredver" ] 
+ if  [ "$currentver" -ne "$requiredver" ] 
  then 
-        echo "You have a different version  than the required"
+        echo "You have a $currentversion version  --- required is 3.0.0"
         echo "It might affect some functionality"
         read -p "Press enter to continue"
-        ruby main.rb        
- 
+        ruby main.rb   
+else     
+       read -p "Successfully installed Press enter to continue"
+        ruby main.rb   
  fi
 
 #clear the screen

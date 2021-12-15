@@ -3,8 +3,11 @@ GEM
   specs:
     colorize (0.8.1)
     diff-lcs (1.4.4)
+    json (2.6.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    postmark (1.22.0)
+      json
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -52,6 +55,7 @@ PLATFORMS
 DEPENDENCIES
   colorize (~> 0.8.1)
   pastel
+  postmark
   rspec (~> 3.10)
   tty-box
   tty-font
@@ -59,4 +63,4 @@ DEPENDENCIES
   tty-table
 
 BUNDLED WITH
-   2.2.3
+   2.2.33

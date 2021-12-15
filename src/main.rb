@@ -5,9 +5,12 @@ require "pastel"
 require "Artii"
 require "tty-box"
 require "tty-font"
-# require "tty-color"
+require "postmark"
+
 require_relative './methods.rb'
 require_relative "./methods_display.rb"
+
+
 #----------ARGV Handling--------
 if ARGV.length > 0
   flag, *rest = ARGV
@@ -67,8 +70,13 @@ app_heading
 
 # ------------Reading from file birthday all the contacts 
 BIRTHDAY_FILE_PATH = "./birthday.json"
-hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
-array_of_contacts = hash_of_contacts["contacts"]
+API_TOKEN = '694dcf63-c802-4e81-af54-8555046d3f3a' #PLEASE CHANGE WITH YOUR API_TOKEN FROM POSTMARK ACCOUNT
+SENDER_SIGNATURE = 'gcas022101@coderacademy.edu.au' #PLEASE CHANGE WITH YOUR SENDER SIGNATURE FROM POSTMARK 
+
+
+
+
+
 
 
 
@@ -88,25 +96,57 @@ LIST_OF_MONTHS = {
           "DEC." =>12
         }
 LIST_OF_MAIN_MENU ={
-  'Whose birthday is today?'=> 1,
-  'I want to know whose birthday is within an interval'=>2,
-  'I want to add a contact'=>3,
-  'I want to add new letter'=>4,
-  'I want to update a contact'=>5,
-  'Exit'=>6
+  'I want to know whose birthday is today.'=> 1,
+  'I want to know whose birthday is within an interval.'=>2,
+  'I want to add a contact.'=>3,
+  'I want to add new letter.'=>4,
+  'I want to update a contact.'=>5,
+  'I want to remove a contact.'=>6,
+  'I want to send Birthday wish to someone.'=>7,
+  'I want to see my contact list.'=>8,
+  'Exit'=>9
 }
 while true
   prompt = TTY::Prompt.new
-  answer = prompt.select("What would you like to do?",LIST_OF_MAIN_MENU,symbols: { marker: ">" },per_page:6)
+  answer = prompt.select("What would you like to do?",LIST_OF_MAIN_MENU,symbols: { marker: ">" },per_page:12)
   case answer
       when 1 #to find a birthday matches today
+        menu_heading("BIRTHDAY   MATCH")
+        hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
+        array_of_contacts = hash_of_contacts["contacts"]
           found_birthday_array = get_birthday_of_today(array_of_contacts)
           if found_birthday_array.empty? 
             puts no_data_style.("You dont seem to have any Birthdays today!!")
           else
             table_display (found_birthday_array) 
+          if prompt.yes?("Do You want to send an email?") 
+            if found_birthday_array.length >=2
+              choose_contact_for_email(found_birthday_array)
+              contact = choose_contact
+              if contact
+              random_letter_name =random_letter
+              name = ask_for_signiture
+              message = prepare_email(contact,random_letter_name,name)
+              send_email(message,contact["email"])
+              end
+            else
+              contact = found_birthday_array[0]
+              if contact
+              random_letter_name =random_letter
+              name = ask_for_signiture
+              message = prepare_email(contact,random_letter_name,name)
+              puts message
+              send_email(message,contact["email"])
+              end
+            end
+            
           end
+        end
+
       when 2 # to find contact in an interval 
+        menu_heading("BIRTHDAY   MATCH")
+        hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
+        array_of_contacts = hash_of_contacts["contacts"]
         puts "Any birthday between:"
         answer = select_month
         from_month = answer
@@ -119,6 +159,7 @@ while true
           table_display (found_birthday_array) 
         end
       when 3 # to add new contact
+        menu_heading("ADD   CONTACT")
           puts "To add a new contact you need to provide Name, email, and Date of Birth"
           new_contact = enter_contact_data    
           new_contact.display_contact
@@ -127,42 +168,63 @@ while true
           else
 
           end
-      when 4
+      when 4 # to add letter template
+        menu_heading("ADD   LETTER")
+        letter_temp_to = "Dear [NAME],"
+        letter_temp_body = prompt.multiline("Please type your message", default: "Happy Birthday")
+        if letter_temp_body.is_a?(String)
+          letter_temp_body = [letter_temp_body]
+        end
+        letter_temp_body.join(" ")
+        letter_signature = prompt.multiline("Please type your signature", default: "All my love,\n [YourName]") 
+        if letter_signature.is_a?(String)
+          letter_signature = [letter_signature]
+        end
+        letter_signature.join(" ")
+        letter_temp = "#{letter_temp_to}\n #{letter_temp_body.join(" ")},\n#{letter_signature.join(" ")}"
+       
+        create_write_letter(letter_temp)
+       
         
       when 5 # to update a contact using the name
-        i=0
-        prompt_update = TTY::Prompt.new
-        name= prompt_update.ask("Enter Name:")do |q| #to capitalize every word in the name
-        q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
-        q.modify :strip, :collapse
-        q.required true
-        q.validate(/^[a-zA-Z\s]*$/,"Invalid name please try again")
+        menu_heading("UPDATE   CONTACT")
+        found_contact = require_contact_by_name  
+        if found_contact
+          update_contact (found_contact)
         end
-        found_contact = get_contact_by_name(name)
-        if found_contact.empty?
-          puts "No contacts matches this name"
-        else
-        if found_contact.length >=2 
-          
-          puts "You have #{found_contact.length} contacts"
-          prompt_choose = TTY::Prompt.new
-          change_answer = prompt_choose.select("Which one do you want to change") do |menu|
-              found_contact.each do |contact|
-              menu.choice name: "#{contact["name"]} Email: #{contact ["email"]} Data of Birth(dd-mm) %0.2d" % contact["day"]+ "- %0.2d" % contact["month"],  value: i
-              i+=1
-               
-              end
+      when 6 # to remove a contact from the list
+        menu_heading("REMOVE   CONTACT")
+        found_contact = require_contact_by_name 
+        contact_index_in_file = get_contact_index(found_contact) 
+        if found_contact
+          if prompt.yes?("Do You want to Delete?")
+            begin
+              delete_contact_from_file (contact_index_in_file)
+              confirm_message("Contact deleted")
+
+                rescue
+                  error_message("Something went wrong, please try again!!!")
             end
           else
-            puts "Name: #{found_contact[0]["name"]}  Email: #{found_contact[0]["email"]}  Data of Birth (dd - mm): %0.2d" % found_contact[0]["day"] + "- %0.2d" % found_contact[0]["month"]
-            change_answer = 0
+
           end
           
-          update_contact (found_contact[change_answer])
-
         end
-
-      when 6
+      when 7  # sending email to someone
+        menu_heading("SEND   EMAIL")
+          contact = choose_contact
+          if contact
+          random_letter_name =random_letter
+          name = ask_for_signiture
+          message = prepare_email(contact,random_letter_name,name)
+          send_email(message,contact["email"])
+          end
+      when 8 # to retrieve the contact list in file
+        menu_heading("CONTACT   LIST")
+          hash_of_contacts = file_to_array(BIRTHDAY_FILE_PATH)
+         table_display (hash_of_contacts["contacts"])
+      
+      when 9
         end_app_heading
         puts "Thank You for using the app.".blue 
         break

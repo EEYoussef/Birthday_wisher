@@ -1,17 +1,50 @@
 #-------------method to format the list of contact in table--------#
 require "tty-prompt"
+require "tty-font"
 require "tty-table"
 require "colorize"
 require_relative "./classes/contact.rb"
 
+
+
+#---------------HEADINGS
+
+def app_heading
+    self_clear
+    arter = Artii::Base.new
+    puts arter.asciify("Birthday Wisher").blue
+    pastel = Pastel.new
+    font = TTY::Font.new(:starwars)
+    puts pastel.blue(font.write("Welcome", letter_spacing: 1))
+    # box = TTY::Box.frame(width: 165, height: 5, align: :center) do
+    #      "Welcome to Birthday Wisher".blue
+    #     end
+    # puts box
+    
+end 
+
+def menu_heading(title)
+    self_clear
+    arter = Artii::Base.new
+    puts arter.asciify(title).blue
+end
+#------------end of app heading--------
+def end_app_heading
+    self_clear
+    arter = Artii::Base.new
+    puts arter.asciify("SEE  YOU  NEXT  TIME !").blue
+end 
+
+#---------------------
+
+
 def table_display(array_of_contacts)
-   
-    header = ["Name", "Birthday","Email"]
+    header = ["Name", "Birthday DD-MM","Email"]
     table = TTY::Table.new(header: header)
     array_of_contacts.each do |contact|
-        table<<[contact["name"],contact["day"].to_s + "-" + contact["month"].to_s, contact["email"]]
+        table<<[contact["name"],"%0.2d" %contact["day"].to_s + "- %0.2d" % + contact["month"].to_s, contact["email"]]
     end
-      
+    # %0.2d" % contact["day"]+ "- %0.2d" % contact["month"]
     puts table.render(:ascii).red
       
 end
@@ -45,7 +78,7 @@ def select_day(month)
     when 2
             day = prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-29") }
     end  
-return day
+return day.to_i
 
 end
 #----------Method to collect data from user for the contact
@@ -65,3 +98,18 @@ def enter_contact_data
     new_contact = Contact.new(name,email,month,day)
     return new_contact
 end
+#----------confirmation message
+def confirm_message(message)
+    
+    # puts arter.asciify(message).blue
+    pastel = Pastel.new
+    puts pastel.decorate(message, :green, :on_blue, :bold)
+     
+end 
+def error_message(message)
+    pastel = Pastel.new
+    puts pastel.decorate(message, :white, :on_red, :bold)
+    
+    
+    
+end 
