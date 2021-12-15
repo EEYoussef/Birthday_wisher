@@ -6,6 +6,13 @@ require "colorize"
 require_relative "./classes/contact.rb"
 
 
+#----------Styling
+def no_data_style(message)
+pastel = Pastel.new(eachline: "\n")
+no_data_style_pastel  = pastel.red.bold.detach
+puts no_data_style_pastel.(message)
+# warning  = pastel.yellow.detach
+end
 #--------press any key to cont.
 def continue                                                                                                               
     print "press any key to go to the main menu"                                                                                                    
@@ -44,6 +51,9 @@ end
 
 
 def table_display(array_of_contacts)
+    if array_of_contacts.empty? 
+        no_data_style("You dont seem to have any Birthdays today!!")
+      else
     header = ["Name", "Birthday DD-MM","Email"]
     table = TTY::Table.new(header: header)
     array_of_contacts.each do |contact|
@@ -51,7 +61,7 @@ def table_display(array_of_contacts)
     end
     # %0.2d" % contact["day"]+ "- %0.2d" % contact["month"]
     puts table.render(:ascii).red
-      
+end 
 end
 
 def letter_display (letter_name)

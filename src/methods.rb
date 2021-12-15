@@ -45,13 +45,14 @@ end
 #----------Method that takes the interval of dates to look in and returns a list of name or no one found-----------#
 def get_birthday_in_interval(array_of_contacts,from_month,to_month)
     found_birthdays=[]
+    if array_of_contacts 
      array_of_contacts.each do |contact|
         if contact["month"] >= from_month && contact["month"] <= to_month
             found_birthdays << contact
         end
     
     end
-     
+end
     return found_birthdays
 
 end
@@ -149,7 +150,7 @@ def require_contact_by_name
     end
     found_contact = get_contact_by_name(name)
     if found_contact.empty?
-      puts "No contacts matches this name"
+      puts "No contacts matche this name".red
       return
     else
     if found_contact.length >=2 

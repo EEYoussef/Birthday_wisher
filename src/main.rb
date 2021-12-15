@@ -9,9 +9,26 @@ require "postmark"
 require "dotenv"
 require_relative './methods.rb'
 require_relative "./methods_display.rb"
-require 'io/console'                                                                                                       
+require 'io/console'
+require 'pathname'                                                                                                       
 
 Dotenv.load("../.env")
+
+#----------checking for files used by the app-----------
+pn = Pathname.new("./birthday.json")
+
+if !pn.exist? 
+  puts "Invalid path! Creating file for you "
+        
+  default_json_contact = {"contacts":[]}
+  File.open('./birthday.json', "w") do |file| 
+      file.write(default_json_contact.to_json)
+  end
+end
+
+#------------------------------------------------------
+
+
 
 #----------ARGV Handling--------
 if ARGV.length > 0
@@ -59,10 +76,7 @@ if ARGV.length > 0
 end
 
 
-#----------Styling
-pastel = Pastel.new(eachline: "\n")
-no_data_style    = pastel.red.bold.detach
-warning  = pastel.yellow.detach
+
 
 #-------------------------app welcoming messge
 app_heading
@@ -117,7 +131,7 @@ while true
         array_of_contacts = hash_of_contacts["contacts"]
           found_birthday_array = get_birthday_of_today(array_of_contacts)
           if found_birthday_array.empty? 
-            puts no_data_style.("You dont seem to have any Birthdays today!!")
+            no_data_style("You dont seem to have any Birthdays today!!")
           else
             table_display (found_birthday_array) 
           if prompt.yes?("Do You want to send an email?") 
@@ -156,7 +170,7 @@ while true
         to_month = answer
         found_birthday_array = get_birthday_in_interval(array_of_contacts,from_month,to_month)
         if found_birthday_array.empty?
-          puts no_data_style.("You dont seem to have any Birthdays in this interval!!")
+          no_data_style("You dont seem to have any Birthdays in this interval!!")
           
         else
           table_display (found_birthday_array) 
