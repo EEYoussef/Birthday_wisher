@@ -9,6 +9,7 @@ require "postmark"
 require "dotenv"
 require_relative './methods.rb'
 require_relative "./methods_display.rb"
+require 'io/console'                                                                                                       
 
 Dotenv.load("../.env")
 
@@ -84,7 +85,7 @@ LIST_OF_MONTHS = {
           "JAN." => 1,
           "FEB." => 2,
           "MAR." =>3,
-          "APR," => 4,
+          "APR." => 4,
           "MAY." => 5,
           "JUNE."=>6,
           "JULY."=> 7,
@@ -106,6 +107,7 @@ LIST_OF_MAIN_MENU ={
   'Exit'=>9
 }
 while true
+
   prompt = TTY::Prompt.new
   answer = prompt.select("What would you like to do?",LIST_OF_MAIN_MENU,symbols: { marker: ">" },per_page:12)
   case answer
@@ -140,34 +142,37 @@ while true
             end
             
           end
+          
         end
 
       when 2 # to find contact in an interval 
         menu_heading("BIRTHDAY   MATCH")
         hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
         array_of_contacts = hash_of_contacts["contacts"]
-        puts "Any birthday between:"
+        # puts "Any birthday between:"
         answer = select_month
         from_month = answer
-        answer = prompt.select("And:",LIST_OF_MONTHS.select{|key,value| value >= from_month},symbols: { marker: ">" },per_page:12) 
+        answer = prompt.select("To:",LIST_OF_MONTHS.select{|key,value| value >= from_month},symbols: { marker: ">" },per_page:12) 
         to_month = answer
         found_birthday_array = get_birthday_in_interval(array_of_contacts,from_month,to_month)
         if found_birthday_array.empty?
           puts no_data_style.("You dont seem to have any Birthdays in this interval!!")
+          
         else
           table_display (found_birthday_array) 
         end
+        
       when 3 # to add new contact
         menu_heading("ADD   CONTACT")
-          puts "To add a new contact you need to provide Name, email, and Date of Birth"
-          new_contact = enter_contact_data    
-          new_contact.display_contact
-          if prompt.yes?("Do You want to save?")
-            new_contact.add_contact_to_file(BIRTHDAY_FILE_PATH)
-          else
+        puts "To add a new contact you need to provide Name, email, and Date of Birth"
+        new_contact = enter_contact_data    
+        new_contact.display_contact
+        if prompt.yes?("Do You want to save?")
+          new_contact.add_contact_to_file(BIRTHDAY_FILE_PATH)
+        else
 
-          end
-      when 4 # to add letter template
+        end
+      when 4 # to add new letter template
         menu_heading("ADD   LETTER")
         letter_temp_to = "Dear [NAME],"
         letter_temp_body = prompt.multiline("Please type your message", default: "Happy Birthday")
@@ -181,9 +186,18 @@ while true
         end
         letter_signature.join(" ")
         letter_temp = "#{letter_temp_to}\n #{letter_temp_body.join(" ")},\n#{letter_signature.join(" ")}"
-       
-        create_write_letter(letter_temp)
-       
+        puts letter_temp
+        if prompt.yes?("Do You want to Save?")
+          begin
+            create_write_letter(letter_temp)
+            confirm_message("Letter Added")
+
+              rescue
+                error_message("Something went wrong, please try again!!!")
+          end
+        else
+          error_message("Letter cancelled")
+        end  
         
       when 5 # to update a contact using the name
         menu_heading("UPDATE   CONTACT")
@@ -220,12 +234,16 @@ while true
           end
       when 8 # to retrieve the contact list in file
         menu_heading("CONTACT   LIST")
-          hash_of_contacts = file_to_array(BIRTHDAY_FILE_PATH)
-         table_display (hash_of_contacts["contacts"])
-      
+        hash_of_contacts = file_to_array(BIRTHDAY_FILE_PATH)
+        table_display (hash_of_contacts["contacts"])
+        
       when 9
         end_app_heading
         puts "Thank You for using the app.".blue 
         break
+  
   end
+  continue
+  menu_heading("Birthday Wisher")
+  
 end

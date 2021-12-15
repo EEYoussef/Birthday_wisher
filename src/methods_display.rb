@@ -6,7 +6,12 @@ require "colorize"
 require_relative "./classes/contact.rb"
 
 
-
+#--------press any key to cont.
+def continue                                                                                                               
+    print "press any key to go to the main menu"                                                                                                    
+    STDIN.getch                                                                                                              
+    # print "            \r" # extra space to overwrite in case next sentence is short                                                                                                              
+  end           
 #---------------HEADINGS
 
 def app_heading
@@ -64,7 +69,7 @@ end
 #----------------Method to ask the user to select a month
 def select_month 
     prompt = TTY::Prompt.new
-     prompt.select("Select a month",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12)
+     prompt.select("Select from month",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12)
     
   end
 
@@ -72,11 +77,17 @@ def select_day(month)
     prompt = TTY::Prompt.new
     case month
     when 4,6,9,11
-            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-30") }
+            day =prompt.ask("Enter Date of Birth \n Day:") do |q| q.in("1-30") 
+             q.messages[:range?] = "%{value} out of expected range %{in}"
+            end
     when 1,3,5,7,8,10,12
-            day =prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-31") }
+            day =prompt.ask("Enter Date of Birth \n Day:") do |q| q.in("1-31") 
+                q.messages[:range?] = "%{value} out of expected range %{in}"
+            end
     when 2
-            day = prompt.ask("Enter Date of Birth \n Day:"){ |q| q.in("1-29") }
+            day = prompt.ask("Enter Date of Birth \n Day:") do |q| q.in("1-29")   
+            q.messages[:range?] = "%{value} out of expected range %{in}"
+            end
     end  
 return day.to_i
 
