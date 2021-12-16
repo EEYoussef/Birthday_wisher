@@ -5,7 +5,7 @@ require 'json'
 
 describe 'methods' do
     # to create at least one contact with today's date
-    before(:each) do 
+     before(:all) do 
         today = Time.now
         @today_month = today.month
         @today_day = today.day
@@ -14,20 +14,21 @@ describe 'methods' do
             json = File.read('./test-birthday.json')
             secondJsonArray = JSON.parse(json)
             secondJsonArray["contacts"]<< contact_test.contact_hash
-            File.open("./test-birthday.json","w") do |f|
-            f.puts JSON.pretty_generate(secondJsonArray)
-            end
+           
         rescue
             default_json_contact = {"contacts":[@contact_test.contact_hash]}
             File.open('./test-birthday.json', "w") do |file| 
             file.write(default_json_contact.to_json)
             end
-            @secondJsonArray = default_json_contact
+           
         end
+        File.open("./test-birthday.json","w") do |f|
+            f.puts JSON.pretty_generate(secondJsonArray)
+            end
+        # secondJsonArray = default_json_contact
+            contacts_array =  secondJsonArray["contacts"]
 
-            @contacts_array =  @secondJsonArray["contacts"]
-
-        end
+     end
 
     #----to fill the file with test data after all the tests are done
     after(:all) do 
@@ -44,35 +45,36 @@ describe 'methods' do
 
         end 
     end 
-    describe 'file_to_array' do
-    it "file_to_array should return an array" do
-        expect(file_to_array('./test-birthday.json')). to be_a (Hash)
-        end
-        it "file_to_array should return an array that have " do
-            expect(file_to_array('./test-birthday.json')["contacts"][0]["name"]). to eq ("Today")
-        end
-    end
-    describe 'get_birthday_of_today' do
-        json = File.read('./test-birthday.json')
-        secondJsonArray = JSON.parse(json)
+    #  describe 'file_to_array' do
+        
+    # it "file_to_array should return an array" do
+    #     expect(file_to_array('./test-birthday.json')). to be_a (Hash)
+    #     end
+    #     it "file_to_array should return an array that have " do
+    #         expect(file_to_array('./test-birthday.json')["contacts"][0]["name"]). to eq ("Today")
+    #     end
+    #  end
+    #  describe 'get_birthday_of_today' do
+    #     json = File.read('./test-birthday.json')
+    #     secondJsonArray = JSON.parse(json)
 
-        it "get_birthday_of_today should return an array " do
-            expect(get_birthday_of_today(secondJsonArray["contacts"])). to be_a (Array)
-        end
-        it "get_birthday_of_today should return an array " do
-            expect(get_birthday_of_today(secondJsonArray["contacts"]).any? {|contact| contact["name"] == "Today"}).to be_truthy
+    #     it "get_birthday_of_today should return an array " do
+    #         expect(get_birthday_of_today(secondJsonArray["contacts"])). to be_a (Array)
+    #     end
+    #     it "get_birthday_of_today should return an array " do
+    #         expect(get_birthday_of_today(secondJsonArray["contacts"]).any? {|contact| contact["name"] == "Today"}).to be_truthy
 
-        end
-    end
-    describe 'get_birthday_in_interval' do
-        json = File.read('./test-birthday.json')
-        secondJsonArray = JSON.parse(json)
-        from_month =2
-        to_month =12
-       it 'should return array of contacts in interval' do
-        expect(get_birthday_in_interval(secondJsonArray["contacts"],from_month,to_month).any? {|contact| contact["name"] == "Today"}). to be_truthy
-       end
-    end
+    #     end
+    #  end
+    #  describe 'get_birthday_in_interval' do
+    #     json = File.read('./test-birthday.json')
+    #     secondJsonArray = JSON.parse(json)
+    #     from_month =2
+    #     to_month =12
+    #    it 'should return array of contacts in interval' do
+    #     expect(get_birthday_in_interval(secondJsonArray["contacts"],from_month,to_month).any? {|contact| contact["name"] == "Today"}). to be_truthy
+    #    end
+    #  end
 
 end 
 

@@ -78,13 +78,13 @@ def letter_display (letter_name)
 end
 #----------------Method to ask the user to select a month
 def select_month 
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(interrupt: :exit)
      prompt.select("Select from month",LIST_OF_MONTHS,symbols: { marker: ">" },per_page:12)
     
   end
 
 def select_day(month)
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(interrupt: :exit)
     case month
     when 4,6,9,11
             day =prompt.ask("Enter Date of Birth \n Day:") do |q| q.in("1-30") 
@@ -104,7 +104,7 @@ return day.to_i
 end
 #----------Method to collect data from user for the contact
 def enter_contact_data
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(interrupt: :exit)
     name= prompt.ask("Enter Name:")do |q| #to capitalize every word in the name
     q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
     q.modify :strip, :collapse

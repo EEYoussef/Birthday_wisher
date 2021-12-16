@@ -93,7 +93,7 @@ end
 
 def update_contact(contact_hash)
     contact_index_in_file = get_contact_index(contact_hash)
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(interrupt: :exit)
     answer = prompt.select("Which field do you want to change?") do |menu|
         menu.choice "Email", 1
         menu.choice "Data of Birth", 2
@@ -141,7 +141,7 @@ end
     
 def require_contact_by_name
     i=0
-    prompt_update = TTY::Prompt.new
+    prompt_update = TTY::Prompt.new(interrupt: :exit)
     name= prompt_update.ask("Enter Name:")do |q| #to capitalize every word in the name
     q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
     q.modify :strip, :collapse
@@ -156,7 +156,7 @@ def require_contact_by_name
     if found_contact.length >=2 
       
       puts "You have #{found_contact.length} contacts"
-      prompt_choose = TTY::Prompt.new
+      prompt_choose = TTY::Prompt.new(interrupt: :exit)
       change_answer = prompt_choose.select("Which one do you want to change") do |menu|
           found_contact.each do |contact|
           menu.choice name: "#{contact["name"]} Email: #{contact ["email"]} Data of Birth(dd-mm) %0.2d" % contact["day"]+ "- %0.2d" % contact["month"],  value: i
@@ -181,8 +181,9 @@ def choose_contact
 end
 
 def choose_contact_for_email (found_contact)
+       i=0
         puts "You have #{found_contact.length} contacts"
-        prompt_choose = TTY::Prompt.new
+        prompt_choose = TTY::Prompt.new(interrupt: :exit)
         change_answer = prompt_choose.select("Which one do you want to change") do |menu|
             found_contact.each do |contact|
             menu.choice name: "#{contact["name"]} Email: #{contact ["email"]} Data of Birth(dd-mm) %0.2d" % contact["day"]+ "- %0.2d" % contact["month"],  value: i
@@ -203,7 +204,7 @@ def random_letter
     
 end 
 def ask_for_signiture
-    prompt_update = TTY::Prompt.new
+    prompt_update = TTY::Prompt.new(interrupt: :exit)
     name= prompt_update.ask("Enter Signiture Name:")do |q| #to capitalize every word in the name
     q.convert -> (input) { input.split.map(&:capitalize).join(' ')}
     q.modify :strip, :collapse
@@ -228,7 +229,7 @@ return filtered_data_with_signiture
 
 end
 def send_email(message,email)
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(interrupt: :exit)
 begin    
     
     # Create an instance of Postmark::ApiClient:

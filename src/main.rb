@@ -14,6 +14,16 @@ require 'pathname'
 
 Dotenv.load("../.env")
 
+# ------------Reading from file birthday all the contacts 
+BIRTHDAY_FILE_PATH = "./birthday.json"
+
+API_TOKEN = ENV['API_TOKEN_POSTMARK']
+SENDER_SIGNATURE = ENV['SENDER_SIGNATURE_POSTMORK']
+
+
+
+
+
 #----------checking for files used by the app-----------
 pn = Pathname.new("./birthday.json")
 
@@ -38,9 +48,10 @@ if ARGV.length > 0
   when '-help' , '-h'
     puts "Start with choosing one of the options provided in the menu"
     puts "using the up and down arrows and then press return"
-    puts "-info   ------- information about the app"
-    puts "-c -------------prints all the contacts in your file"
-    puts "-l ------prints all the wishies templates"
+    puts "-info   - information about the app"
+    puts "-c      -prints all the contacts in your file"
+    puts "-l      -prints all the wishies templates"
+    puts "-s      -send email to contacts who have birthday today"     
     exit
   when '-info'
     puts "This program helps you remeber the birthday of your friend and family "
@@ -52,6 +63,33 @@ if ARGV.length > 0
     array_of_contacts = hash_of_contacts["contacts"]
     table_display (array_of_contacts)
     exit
+  when "-s"
+    if rest.length>=2
+      name =""
+      name_array  = rest[0..-1]
+      name_array.each do |argument|
+        name = "#{name} "+ "#{argument.capitalize}" 
+        end
+        hash_of_contacts = file_to_array (BIRTHDAY_FILE_PATH)
+        array_of_contacts = hash_of_contacts["contacts"]
+        found_birthday_array = get_birthday_of_today(array_of_contacts)
+      if found_birthday_array.empty? 
+         no_data_style("You dont seem to have any Birthdays today!!")
+      else
+        table_display (found_birthday_array) 
+        found_birthday_array.each do |birthday_contact|
+          random_letter_name =random_letter  
+          message = prepare_email(birthday_contact,random_letter_name,name)
+          send_email(message,birthday_contact["email"])
+        end
+      end
+    
+  else
+    puts "Please provide the signature name after -s "
+    exit
+  end
+    exit
+  
   when "-l"
     file_name = rest[0]
     if file_name
@@ -84,14 +122,6 @@ app_heading
 #------------------------
 
 
-# ------------Reading from file birthday all the contacts 
-BIRTHDAY_FILE_PATH = "./birthday.json"
-
-API_TOKEN = ENV['API_TOKEN_POSTMARK']
-SENDER_SIGNATURE = ENV['SENDER_SIGNATURE_POSTMORK']
-
-
-
 
 
 #-----------,--Main Menu------------
@@ -122,7 +152,8 @@ LIST_OF_MAIN_MENU ={
 }
 while true
 
-  prompt = TTY::Prompt.new
+  prompt = TTY::Prompt.new(interrupt: :exit)
+
   answer = prompt.select("What would you like to do?",LIST_OF_MAIN_MENU,symbols: { marker: ">" },per_page:12)
   case answer
       when 1 #to find a birthday matches today
@@ -136,8 +167,8 @@ while true
             table_display (found_birthday_array) 
           if prompt.yes?("Do You want to send an email?") 
             if found_birthday_array.length >=2
-              choose_contact_for_email(found_birthday_array)
-              contact = choose_contact
+              contact =choose_contact_for_email(found_birthday_array)
+              #  choose_contact
               if contact
               random_letter_name =random_letter
               name = ask_for_signiture
