@@ -65,7 +65,7 @@ def get_contact_by_name(name)
     i=0
     array_of_contacts.each do |key ,contact_list|
         contact_list.each do |contact|
-            if contact["name"]==name
+            if contact["name"].include? name
                 found_array << contact
             end 
 

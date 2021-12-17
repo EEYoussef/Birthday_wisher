@@ -64,7 +64,8 @@ if ARGV.length > 0
     table_display (array_of_contacts)
     exit
   when "-s"
-    if rest.length>=2
+    
+    if rest.length >= 1
       name =""
       name_array  = rest[0..-1]
       name_array.each do |argument|
