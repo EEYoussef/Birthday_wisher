@@ -24,13 +24,13 @@ You can find a source code in [here](https://github.com/EEYoussef/Birthday_wishe
 
 ![Check_bd_today](./docs/Check_bd_today.png)
 
-
+![add_letter_send_email_dfd.drawio](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/add_letter_send_email_dfd.drawio.png)
 
 ![DFD_all_in_one Large](./docs/DFD_all_in_one Large.jpeg)
 
 
 
-![image-20211217200951187](/Users/minaki/Library/Application Support/typora-user-images/image-20211217200951187.png)
+![Screen Shot 2021-12-18 at 1.32.11 am](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 1.32.11 am.png)
 
  # **Scope:** 
 
@@ -76,17 +76,29 @@ You can find the Trello Board in [here](https://trello.com/invite/b/K25yLiwf/886
 
 ![Screen Shot 2021-12-10 at 8.08.41 pm Large](./docs/Screen Shot 2021-12-10 at 8.08.41 pm Large.jpeg)
 
+![Screen Shot 2021-12-10 at 12.52.37 pm Large](./docs/Screen Shot 2021-12-10 at 12.52.37 pm Large.jpeg)
+
+![Screen Shot 2021-12-13 at 9.57.06 am Large](./docs/Screen Shot 2021-12-13 at 9.57.06 am Large.jpeg)
+
+![Screen Shot 2021-12-18 at 1.42.54 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 1.42.54 am Large.jpeg)![Screen Shot 2021-12-18 at 1.43.03 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 1.43.03 am Large.jpeg)
+
+
+
 ![Screen Shot 2021-12-10 at 12.44.23 pm Large](./docs/Screen Shot 2021-12-10 at 12.44.23 pm Large.jpeg)
 
 ![Screen Shot 2021-12-10 at 12.44.33 pm Large](./docs/Screen Shot 2021-12-10 at 12.44.33 pm Large.jpeg)
 
-![Screen Shot 2021-12-10 at 12.52.37 pm Large](./docs/Screen Shot 2021-12-10 at 12.52.37 pm Large.jpeg)
+
 
 ![Screen Shot 2021-12-11 at 10.53.59 am Large](./docs/Screen Shot 2021-12-11 at 10.53.59 am Large.jpeg)
 
-![Screen Shot 2021-12-13 at 9.57.06 am Large](./docs/Screen Shot 2021-12-13 at 9.57.06 am Large.jpeg)
 
 
+
+
+
+
+![Screen Shot 2021-12-18 at 1.40.52 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 1.40.52 am Large.jpeg)
 
 # **Requirement/Features:** 
 
@@ -100,7 +112,7 @@ You can find the Trello Board in [here](https://trello.com/invite/b/K25yLiwf/886
 
 
 
-**User interaction with the application**
+# **User interaction with the application**
 
 When the user runs the app, they will see a top banner, and a welcoming message. Then a user friendly question asking what does the user want to do. The question is followed by a list of main menu options which the user can navigate by up and down arrows and this is how the user will interact with each feature. then the user can select an option by clicking on Enter key to select. ![Screen Shot 2021-12-15 at 8.27.41 pm](./docs/Screen Shot 2021-12-15 at 8.27.41 pm.png)
 The selected menu options will change colour to green so the user will distinguish which option they are on. 
@@ -113,10 +125,12 @@ After hitting ‘Enter’ the option prints beside the question so the user can 
 After entering all the necessary details the application will display all the entries and ask the user if they want to save. 
 
 ![Screen Shot 2021-12-15 at 8.56.55 pm](./docs/Screen Shot 2021-12-15 at 8.56.55 pm.png)
-**Features:**
+
+# **Features:**
 
 The user will be asked to select from a menu of options
-**To know whose birthday is on the day** 
+
+## **To know whose birthday is on the day** 
 
 The user needs to select “I want to know whose birthday is today?”. 
 
@@ -128,6 +142,8 @@ And the app will display a readable table of the contacts whose birthday is on t
 
  When the app asks if the user wants to send an email and the user types anything but ‘y’ or ‘n’ or ‘enter’, the app will display a message ‘inavlid input’ and keep the cursor in place until the user enters a valid answer. ![Screen Shot 2021-12-15 at 9.23.41 pm](./docs/Screen Shot 2021-12-15 at 9.23.41 pm.png)
 
+
+
 **To know whose birthday is within a certain interval** the user needs to select “I want to know whose birthday is within an interval”. The app will ask the user to ‘select a From month’ with a list of the 12 calnder months. After the user selects a month the app will ask the user to select a from a ‘To month’ list which displays remaining months of the year. For example if the user selects a ‘From month’April, the ‘To month’ will display from April to December . Then the The app will display the results in a table with all the contacts whose birthday is within this interval. ![Screen Shot 2021-12-17 at 8.57.09 pm Large](./docs/Screen Shot 2021-12-17 at 8.57.09 pm Large.jpeg)
 
 **Error handling:** **No errors expected.** 
@@ -138,7 +154,9 @@ And the app will display a readable table of the contacts whose birthday is on t
 
 ![Screen Shot 2021-12-15 at 8.38.09 pm](./docs/Screen Shot 2021-12-15 at 8.38.09 pm.png)
 
-**![Screen Shot 2021-12-15 at 8.40.50 pm](./docs/Screen Shot 2021-12-15 at 8.56.55 pm.png)To update contact details,** the user needs to select ‘I want to update a contact’. The app will ask the user to ‘enter name’. Then the app will display a list of matched contacts. {screenshot of matched contacts] Then the app will ask the user which field they want to change. Here the user can toggle between the name, email, date of birth or exit to the main menu. 
+**![Screen Shot 2021-12-15 at 8.40.50 pm](./docs/Screen Shot 2021-12-15 at 8.56.55 pm.png)To update contact details,** the user needs to select ‘I want to update a contact’. The app will ask the user to ‘enter name’. Then the app will display a list of matched contacts. {screenshot of matched contacts] 
+
+Then the app will ask the user which field they want to change. Here the user can toggle between the name, email, date of birth or exit to the main menu. 
 
 ![Screen Shot 2021-12-15 at 9.08.02 pm](./docs/Screen Shot 2021-12-15 at 9.08.02 pm.png)**Error handling: same as adding a new contact feature in point 4.** 
 
@@ -155,6 +173,30 @@ And the app will display a readable table of the contacts whose birthday is on t
 
 **To send a birthday wish to a single person**, the user needs to select ‘I want to send a birthday wish to someone’. Then the app will ask the user to enter the contact name, then the app will ask the user to enter an ending name. ![Screen Shot 2021-12-16 at 7.39.24 pm](./docs/Screen Shot 2021-12-16 at 7.39.24 pm.png)
 **Error handling:** If the user entered a signature name that has emojis or emoticon, or symbols the system will, the system will display ‘invalid name please try again’If there is a network disruption while sending the wish, the system will display ‘Error occurred message not sent, please check your account on postmark”
+
+## Varibales /Methods
+
+Class Contact is used to represent a contact entery in the contact file
+
+![Screen Shot 2021-12-18 at 2.08.41 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 2.08.41 am Large.jpeg)
+
+
+
+Method menu_heading is called whenever a  user select a feature and variable title will have the name of the feature.
+
+![Screen Shot 2021-12-18 at 2.12.33 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 2.12.33 am Large.jpeg)
+
+
+
+Constant variables that have values that will not change in the code , For example  API_TOKEN , SENDER_SIGNATURE,BIRTHDAY_FILE_PATH, and LIST_OF_MONTHS . 
+
+![Screen Shot 2021-12-16 at 7.45.58 pm](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-16 at 7.45.58 pm.png)
+
+![Screen Shot 2021-12-18 at 2.20.33 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 2.20.33 am Large.jpeg)
+
+![Screen Shot 2021-12-18 at 2.20.45 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 2.20.45 am Large.jpeg)
+
+![Screen Shot 2021-12-18 at 2.20.53 am Large](/Users/minaki/Desktop/EmanYoussef_T1A3/docs/Screen Shot 2021-12-18 at 2.20.53 am Large.jpeg)
 
 # Command line Argument
 
@@ -248,9 +290,13 @@ You will need a Postmark account [start here](https://postmarkapp.com/), server 
 
 Please check the [link](https://github.com/wildbit/postmark-gem/wiki/Getting-Started) for further details
 
-For the purpose of this assignment, all these details have been hardcoded. AND WILL BE DELETED ONCE THE PURPOSE IS MET.
+For the purpose of this assignment, all these details have been provided in env file and can be downloaded from canvas.
 
+![image-20211217213639060](/Users/minaki/Library/Application Support/typora-user-images/image-20211217213639060.png)
 
+### Potential Ethical, Legal Implications:
 
-### Potential Ethical, Legal Implications
+### In sending email using an API.
+
+an API Token and email address has been kept in an .env file and  to keep them safe and not shared .
 
