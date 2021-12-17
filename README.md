@@ -114,9 +114,9 @@ You can find the Trello Board in [here](https://trello.com/invite/b/K25yLiwf/886
 
 # **User interaction with the application**
 
-When the user runs the app, they will see a top banner, and a welcoming message. Then a user friendly question asking what does the user want to do. The question is followed by a list of main menu options which the user can navigate by up and down arrows and this is how the user will interact with each feature. then the user can select an option by clicking on Enter key to select. ![Screen Shot 2021-12-15 at 8.27.41 pm](./docs/Screen Shot 2021-12-15 at 8.27.41 pm.png)
+When the user runs the app, they will see a top banner and a welcoming message. Then a user-friendly question asks what does the user want to do. The question is followed by a list of main menu options which the user can navigate by up and down arrows and this is how the user will interact with each feature. then the user can select an option by clicking on Enter key to select. ![Screen Shot 2021-12-15 at 8.27.41 pm](./docs/Screen Shot 2021-12-15 at 8.27.41 pm.png)
 The selected menu options will change colour to green so the user will distinguish which option they are on. 
-The banner will change according to the options the user selected. For example, when the user selects “Add contact from the menu’ the banner changes to “Add Contact” ![Screen Shot 2021-12-15 at 8.38.09 pm](./docs/Screen Shot 2021-12-15 at 8.38.09 pm.png)
+The banner will change according to the options the user selected. For example, when the user selects “Add a contact from the menu’ the banner changes to “Add Contact” ![Screen Shot 2021-12-15 at 8.38.09 pm](./docs/Screen Shot 2021-12-15 at 8.38.09 pm.png)
 Some of the features will ask the user to enter a few details. When the user selects these features, the app will display a message with instructions on which details the user needs to enter. For example, when the user selects ‘add new contact’ the app will display a message and will first ask the user to enter the contact name. ![Screen Shot 2021-12-15 at 8.40.50 pm](./docs/Screen Shot 2021-12-15 at 8.40.50 pm.png)
 After the user enters the name, the app will ask the user to enter an email, then it will ask for the date of birth, in a similar way.  
 
@@ -203,6 +203,10 @@ Constant variables that have values that will not change in the code , For examp
 ![Screen Shot 2021-12-17 at 9.24.05 pm](./docs/Screen Shot 2021-12-17 at 9.24.05 pm.png)
 
 ![Screen Shot 2021-12-16 at 10.24.52 pm](./docs/Screen Shot 2021-12-16 at 10.24.52 pm.png)
+
+# Testing
+
+
 
 ### Installation 
 
