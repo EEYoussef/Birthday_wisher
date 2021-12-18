@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 #remove Gemfile.lock
 rm Gemfile.lock
 

@@ -182,7 +182,7 @@ while true
               random_letter_name =random_letter
               name = ask_for_signiture
               message = prepare_email(contact,random_letter_name,name)
-              puts message
+              
               send_email(message,contact["email"])
               end
             end
@@ -231,7 +231,7 @@ while true
           letter_signature = [letter_signature]
         end
         letter_signature.join(" ")
-        letter_temp = "#{letter_temp_to}\n #{letter_temp_body.join(" ")},\n#{letter_signature.join(" ")}"
+        letter_temp = "#{letter_temp_to}\n #{letter_temp_body.join(" ")}\n#{letter_signature.join(" ")}"
         puts letter_temp
         if prompt.yes?("Do You want to Save?")
           begin

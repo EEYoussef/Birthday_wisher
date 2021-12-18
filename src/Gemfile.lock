@@ -3,6 +3,7 @@ GEM
   specs:
     colorize (0.8.1)
     diff-lcs (1.4.4)
+    dotenv (2.7.6)
     json (2.6.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
@@ -54,6 +55,7 @@ PLATFORMS
 
 DEPENDENCIES
   colorize (~> 0.8.1)
+  dotenv
   pastel
   postmark
   rspec (~> 3.10)

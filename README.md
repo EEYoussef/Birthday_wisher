@@ -206,7 +206,9 @@ Constant variables that have values that will not change in the code , For examp
 
 # Testing
 
+![Screen Shot 2021-12-16 at 11.10.37 pm](./docs/Screen Shot 2021-12-16 at 11.09.02 pm.png)
 
+![Screen Shot 2021-12-16 at 11.10.37 pm](./docs/Screen Shot 2021-12-16 at 11.10.37 pm.png)
 
 ### Installation 
 
@@ -225,6 +227,10 @@ You will need:
    5. Pastel [here](https://rubygems.org/gems/pastel/versions/0.7.1)
    
    6. Bundler  [here](https://help.dreamhost.com/hc/en-us/articles/115001070131-Using-Bundler-to-install-Ruby-gems).
+   
+   6. gem postmark [here](https://rubygems.org/gems/postmark)
+   
+   6. gem dotenv [here](https://rubygems.org/gems/dotenv)
    
       
 
@@ -250,17 +256,43 @@ You will need:
 
 7. Change to the directory that contains the repository.
 
-8. change directory to the src directory.
+8. Check bash : you should get this
+
+```
+/bin/bash
+```
+
+9. change directory to the src directory.
 
 ```
  cd src
 ```
 
-9. Type this code into the terminal to start the application.
+10. Type this code into the terminal to start the application.
 
 ```
  ./bw.sh
 ```
+
+11. By default you will get 
+
+```
+permission denied:./bw.sh
+```
+
+12. To give permission to execute the file
+
+```
+chmod +x ./bw.sh
+```
+
+13. Then  this code to start the application.
+
+```
+ ./bw.sh
+```
+
+
 
 ## Useful Commands :
 
@@ -288,6 +320,14 @@ For displaying all the message templates type:
  ruby main.rb -l
 ```
 
+For send randam  message templates to contacts with birthdays:
+
+```
+ ruby main.rb -s [YOUR SIGNATURE]
+```
+
+## 
+
 ## Requirments to send an email message from your account :
 
 You will need a Postmark account [start here](https://postmarkapp.com/), server and sender signature (or verified domain) set up to use it.
@@ -300,7 +340,13 @@ For the purpose of this assignment, all these details have been provided in env 
 
 ### Potential Ethical, Legal Implications:
 
-### In sending email using an API.
+An API Token and email address has been kept in an .env file and  to keep them safe and not shared.
 
-an API Token and email address has been kept in an .env file and  to keep them safe and not shared .
+There is always some danger in executing a file because everythign in that file will be interpreted as a command for the operating system and that can cause a lot of problems.
+
+**I recommed not to execute the script file unless you understand very well the code in the repo.**
+
+ 
+
+
 
